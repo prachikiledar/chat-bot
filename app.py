@@ -1,21 +1,27 @@
-import streamlit as st
-import os
-from google.generativeai import chat
+from dotenv import load_dotenv 
+load_dotenv() 
 
-# Load secrets from .env
-from dotenv import load_dotenv
-load_dotenv()
+import streamlit as st 
+import os 
+import google.generativeai as genai 
 
-GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
-# Set up Google Generative AI
-chat.api_key = GOOGLE_API_KEY
+# model = genai.GenerativeModel("gemini-flash-1.5") 
+model = genai.GenerativeModel("gemini-pro") 
 
-# Streamlit App
-st.set_page_config(page_title="AI Query App")
-st.title("AI Query Application")
+def my_output(query):
+    response = model.generate_content(query) 
+    return response.text 
 
-query = st.text_input("Enter your query:")
-if st.button("Submit"):
-    response = chat.chat(query)
-    st.write("Response:", response["text"])
+#### UI Development using streamlit 
+
+st.set_page_config(page_title="SMART_BOT")
+st.header("SMART_BOT") 
+input = st.text_input("Input " , key = "input")  
+submit = st.button("Ask your query") 
+
+if submit :
+    response = my_output(input) 
+    st.subheader("The Response is=")
+    st.write(response)
