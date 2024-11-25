@@ -16,8 +16,8 @@ def my_output(query):
 
 #### UI Development using streamlit 
 
-st.set_page_config(page_title="SMART_BOT")
-st.header("SMART_BOT") 
+st.set_page_config(page_title="quick chatter")
+st.header("quick chatter") 
 input = st.text_input("Input " , key = "input")  
 submit = st.button("Ask your query") 
 
